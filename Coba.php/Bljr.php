@@ -1,3 +1,25 @@
+<?php
+
+// koneksi ke database
+$conn = mysqli_connect("localhost", "root", "", "bljr.php");
+
+
+// query ke database
+$result = mysqli_query($conn, "SELECT * FROM register");
+
+// Ubah data ke dalam array
+$rows = [];
+while ($row = mysqli_fetch_assoc($result)) {
+   $rows[] = $row;
+}
+
+
+// Tampung kedalam mahasiswa
+$register = $rows;
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,22 +37,26 @@
          <th>No</th>
          <th>Gambar</th>
          <th>Nama</th>
-         <th>Alamatr</th>
+         <th>Alamat</th>
          <th>Nim</th>
          <th>jurusan</th>
          <th>Aksi</th>
       </tr>
-      <tr>
-         <td>1</td>
-         <td> <img src="img/a-29.jpg" width="100"></td>
-         <td> Agung Cahya Iskandar</td>
-         <td> Cimahi selatan</td>
-         <td>2450081029</td>
-         <td> Informatika</td>
-         <td>
-            <a href="">ubah</a> | <a href=""> hapus </a>
-         </td>
-      </tr>
+
+      <?php $i = 1;
+      foreach ($register as $r): ?>
+         <tr>
+            <td><?= $i++; ?></td>
+            <td> <img src="img/<?= $r['Gambar']; ?>" width="100"></td>
+            <td> <?= $r['Nama']; ?></td>
+            <td><?= $r['Alamat']; ?></td>
+            <td><?= $r['Nim']; ?></td>
+            <td> <?= $r['Jurusan']; ?></td>
+            <td>
+               <a href="">ubah</a> | <a href=""> hapus </a>
+            </td>
+         </tr>
+      <?php endforeach; ?>
    </table>
 
 </html>
